@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
     console.log('data received at server mark',data.showMark);
     console.log('data received at server state',data.gameState);
     
-    socket.emit("move", data);
+    io.emit("move", data);
   });
 
   socket.on("disconnect", () => {
