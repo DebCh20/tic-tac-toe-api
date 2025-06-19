@@ -16,18 +16,13 @@ io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
 
   socket.on("move", (data) => {
-    // Broadcast the move to all other players
-    console.log('data received at server mark',data.showMark);
-    console.log('data received at server state',data.gameState);
+    console.log('data received at server mark', data.showMark);
+    console.log('data received at server state', data.gameState);
     
-    emitData(data);   
+    // Broadcast the move to all other players only once
+    socket.broadcast.emit("move", data);
   });
   
-  function emitData(data){
-    io.emit("move", data);
-    return 0;
-  }
-
   socket.on("disconnect", () => {
     console.log("A user disconnected:", socket.id);
   });
