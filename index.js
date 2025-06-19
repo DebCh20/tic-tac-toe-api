@@ -20,8 +20,13 @@ io.on("connection", (socket) => {
     console.log('data received at server mark',data.showMark);
     console.log('data received at server state',data.gameState);
     
-    io.emit("move", data);
+    emitData(data);   
   });
+  
+  function emitData(data){
+    io.emit("move", data);
+    return 0;
+  }
 
   socket.on("disconnect", () => {
     console.log("A user disconnected:", socket.id);
