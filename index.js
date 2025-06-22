@@ -14,13 +14,16 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
+  let nextMove='X'; 
+  let flag=1;
 
   socket.on("move", (data) => {
-    console.log('data received at server mark', data.showMark);
-    console.log('data received at server state', data.gameState);
+    data.showMark=nextMove;
+    console.log('sending from api');
     
     // Broadcast the move to all other players only once
     socket.broadcast.emit("move", data);
+    nextMove=='X'? 'O':'X';
   });
   
   socket.on("disconnect", () => {
