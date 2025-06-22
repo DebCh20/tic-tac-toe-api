@@ -1,4 +1,3 @@
-const { log } = require("console");
 const express = require("express");
 require('dotenv').config()
 const http = require("http");
@@ -15,19 +14,11 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
-  let nextMove='X'; 
-  let flag=1;
 
   socket.on("move", (data) => {
-    data.showMark=nextMove;
-    console.log('sending from api');
-    console.log('sending nextMove', nextMove);
-    
+    console.log('data received at server', data);    
     // Broadcast the move to all other players only once
     socket.broadcast.emit("move", data);
-    nextMove=='X'? 'O':'X';
-    console.log('sent out and now next move', nextMove);    
-    return 0;
   });
   
   socket.on("disconnect", () => {
