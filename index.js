@@ -1,3 +1,4 @@
+const { log } = require("console");
 const express = require("express");
 require('dotenv').config()
 const http = require("http");
@@ -25,6 +26,7 @@ io.on("connection", (socket) => {
     // Broadcast the move to all other players only once
     socket.broadcast.emit("move", data);
     nextMove=='X'? 'O':'X';
+    console.log('sent out and now next move', nextMove);    
     return 0;
   });
   
