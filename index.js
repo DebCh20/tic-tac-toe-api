@@ -20,10 +20,12 @@ io.on("connection", (socket) => {
   socket.on("move", (data) => {
     data.showMark=nextMove;
     console.log('sending from api');
+    console.log('sending nextMove', nextMove);
     
     // Broadcast the move to all other players only once
     socket.broadcast.emit("move", data);
     nextMove=='X'? 'O':'X';
+    return 0;
   });
   
   socket.on("disconnect", () => {
