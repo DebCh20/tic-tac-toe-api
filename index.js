@@ -5,6 +5,7 @@ const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
+let idList=[];
 const io = new Server(server, {
   cors: {
     origin: "*", // Adjust as per your React app's origin
@@ -14,13 +15,19 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
+  idList.push(socket.id);
+
+  // Assign marks only if there are at least two players
+  let moveMark = {};
+  if (idList[0]) moveMark[idList[0]] = 'X';
+  if (idList[1]) moveMark[idList[1]] = 'O';
 
   socket.on("move", (data) => {
-    console.log('data received at server', data);    
-    // Broadcast the move to all other players only once
+    console.log(`User ${socket.id} (${moveMark[socket.id] || 'Unknown'}) made a move:`, data);
+    data.gameState[data.forId]=moveMark[socket.id]
     socket.broadcast.emit("move", data);
   });
-  
+
   socket.on("disconnect", () => {
     console.log("A user disconnected:", socket.id);
   });
