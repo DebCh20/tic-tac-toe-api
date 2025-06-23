@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
   socket.on("move", (data) => {
     console.log(`User ${socket.id} (${moveMark[socket.id] || 'Unknown'}) made a move:`, data);
     data.gameState[data.forId]=moveMark[socket.id]
-    socket.broadcast.emit("move", data);
+    io.emit("move", data);
   });
 
   socket.on("disconnect", () => {
