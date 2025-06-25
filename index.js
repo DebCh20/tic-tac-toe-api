@@ -19,8 +19,8 @@ io.on("connection", (socket) => {
 
   // Assign marks only if there are at least two players
   let moveMark = {};
-  if (idList[0]) moveMark[idList[idList.length-2]] = 'X';
-  if (idList[1]) moveMark[idList.length-1] = 'O';
+  if (idList[idList.length-1]) moveMark[idList[idList.length-1]] = 'X';
+  if (idList[idList.length-2]) moveMark[idList[idList.length-2]] = 'O';
 
   socket.on("move", (data) => {
     console.log('id list ', idList);    
@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("A user disconnected:", socket.id);
-    idList=[];
+    // idList=[];
   });
 });
 
