@@ -23,6 +23,7 @@ io.on("connection", (socket) => {
   if (idList[1]) moveMark[idList[1]] = 'O';
 
   socket.on("move", (data) => {
+    console.log('id list ', idList);    
     console.log(`User ${socket.id} (${moveMark[socket.id] || 'Unknown'}) made a move:`, data);
     data.gameState[data.forId]=moveMark[socket.id]
     io.emit("move", data);
@@ -30,6 +31,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("A user disconnected:", socket.id);
+    idList=[];
   });
 });
 
